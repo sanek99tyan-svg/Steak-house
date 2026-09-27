@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EMBER & OAK — Steakhouse</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+<div class="transition" id="transition"></div>
+<header class="topbar shell" style="padding-bottom:0">
+  <div class="topbar-left"><span class="table-chip" id="tableChip">TABLE 08</span></div>
+  <div class="brand">EMBER <b>&</b> OAK</div>
+  <div class="topbar-right"><a class="round-btn" href="kitchen.html" title="Kitchen">K</a><a class="round-btn" href="admin.html" title="Admin">A</a><button class="round-btn" id="cartBtn">🛒</button></div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="eyebrow">Modern steakhouse / fire kitchen</div>
+      <h1>FIRE.<br>MEAT.<br>TIME.</h1>
+      <p>Prime cuts, live fire and a menu designed to feel as rich as the room around you.</p>
+      <div class="hero-actions"><button class="primary" id="exploreBtn">Explore menu</button><button class="secondary" id="ordersBtn">My orders</button></div>
+    </div>
+    <div class="hero-stamp">AGED • FIRED • RESTED •</div>
+  </section>
+
+  <section id="menu">
+    <div class="section-head">
+      <div><div class="eyebrow">À LA CARTE</div><h2>The Menu</h2></div>
+      <p>Every order is sent directly to the kitchen demo board. Choose your steak temperature, add notes and keep ordering from the same table.</p>
+    </div>
+    <div class="category-row" id="categoryRow"></div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </section>
+</main>
+
+<div class="cart-bar hidden" id="cartBar"><div><small id="cartItemsCount">0 items</small><br><strong id="cartBarTotal">$0</strong></div><button id="viewCartBtn">View order →</button></div>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="cartDrawer">
+  <div class="drawer-head"><div><div class="eyebrow">TABLE ORDER</div><h2>Your cart</h2></div><button data-close>×</button></div>
+  <div class="drawer-body" id="cartList"></div>
+  <div class="drawer-foot"><div class="total-line"><span>Total</span><strong id="cartTotal">$0</strong></div><button class="primary wide" id="checkoutBtn">Continue to order</button></div>
+</aside>
+
+<aside class="drawer" id="ordersDrawer">
+  <div class="drawer-head"><div><div class="eyebrow">LIVE STATUS</div><h2>My orders</h2></div><button data-close>×</button></div>
+  <div class="drawer-body" id="myOrders"></div>
+</aside>
+
+<section class="modal" id="detailModal">
+  <button class="modal-close" data-close>×</button>
+  <div class="detail-layout">
+    <div class="detail-photo"><img id="detailImg"></div>
+    <div class="detail-info">
+      <div class="eyebrow" id="detailBadge"></div>
+      <h2 id="detailName"></h2>
+      <div class="price" id="detailPrice"></div>
+      <p id="detailDesc"></p>
+      <div id="cookWrap"><div class="eyebrow" style="margin-top:24px">DONENESS</div><div class="cook-row" id="cookRow"></div></div>
+      <div class="field"><label>Special request</label><textarea id="detailNote" placeholder="No salt, sauce on the side..."></textarea></div>
+      <button class="primary wide" id="detailAdd">Add to order</button>
+    </div>
+  </div>
+</section>
+
+<section class="checkout" id="checkout">
+  <div class="checkout-grid">
+    <div class="checkout-left">
+      <div class="eyebrow">ORDER REVIEW</div><h2>One last<br>look.</h2>
+      <div class="order-summary" id="checkoutSummary"></div>
+      <div class="receipt" id="receipt"></div>
+    </div>
+    <div class="checkout-right">
+      <div class="field"><label>Table</label><input id="checkoutTable" value="08"></div>
+      <div class="field"><label>Guest name</label><input id="guestName" placeholder="Optional"></div>
+      <div class="field"><label>Order note</label><textarea id="orderNote" placeholder="Birthday, allergy note, timing request..."></textarea></div>
+      <div class="checkout-actions"><button class="secondary" id="checkoutBack">Back</button><button class="primary" id="placeOrder">Send to kitchen</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+<script src="data.js"></script><script src="app.js"></script>
+</body></html>

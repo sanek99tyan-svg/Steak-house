@@ -1,0 +1,9 @@
+
+const $=s=>document.querySelector(s);const ch=new BroadcastChannel("ember_oak");
+const statuses=["New","Preparing","Ready","Served"];
+function orders(){return JSON.parse(localStorage.getItem("eo_orders")||"[]")}
+function save(list){localStorage.setItem("eo_orders",JSON.stringify(list));ch.postMessage({type:"orders"})}
+function next(id,d=1){let list=orders(),o=list.find(x=>x.id===id);if(!o)return;let i=statuses.indexOf(o.status);o.status=statuses[Math.max(0,Math.min(statuses.length-1,i+d))];o.history.push({status:o.status,at:new Date().toISOString()});save(list);render()}
+function elapsed(t){return Math.max(0,Math.floor((Date.now()-new Date(t))/60000))}
+function render(){let board=$("#board");board.innerHTML="";statuses.forEach(s=>{let lane=document.createElement("div");lane.className="lane";let list=orders().filter(o=>o.status===s).sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));lane.innerHTML=`<div class="lane-head"><h3>${s}</h3><span class="count">${list.length}</span></div>`;list.forEach(o=>{let min=elapsed(o.createdAt),c=document.createElement("div");c.className="order-card"+(min>=15&&s!=="Served"?" hot":"");c.innerHTML=`<div class="order-top"><span class="order-no">#${o.no} · T${o.table}</span><span class="order-time">${min} min</span></div><div class="order-items">${o.items.map(i=>`<div class="order-line"><b>${i.qty}×</b> ${i.name}<small style="display:block;color:#827c72">${i.cook}${i.note?` · ${i.note}`:""}</small></div>`).join("")}</div>${o.note?`<div class="order-note">${o.note}</div>`:""}<div class="order-actions">${s!=="New"?`<button class="back">←</button>`:""}${s!=="Served"?`<button class="next">${s==="New"?"Start":s==="Preparing"?"Ready":s==="Ready"?"Serve":""} →</button>`:""}</div>`;let back=c.querySelector(".back"),n=c.querySelector(".next");if(back)back.onclick=()=>next(o.id,-1);if(n)n.onclick=()=>next(o.id,1);lane.appendChild(c)});board.appendChild(lane)})}
+render();setInterval(render,30000);ch.onmessage=render;
